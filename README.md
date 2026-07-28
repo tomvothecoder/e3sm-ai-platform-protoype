@@ -160,6 +160,11 @@ uv pip install --python .venv/bin/python -r requirements.txt
 - **Hugging Face model download fails:** Confirm the machine can reach Hugging
   Face during the first run. The model is reused from the local cache afterward.
 
+- **`make run` exits with `Segmentation fault: 11` on Apple Silicon:** The
+  embedding model is intentionally run on the CPU to avoid crashes in PyTorch's
+  MPS backend. Reinstall dependencies to ensure the current starter code and
+  environment are in sync.
+
 - **Corpus files are missing or stale:** Run `make corpus-sync`, then
   `make run`.
 

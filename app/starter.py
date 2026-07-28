@@ -1,5 +1,6 @@
 import asyncio
 import os
+from contextlib import suppress
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -39,7 +40,12 @@ livai_llm = OpenAILike(
 )
 
 Settings.llm = livai_llm
-Settings.embed_model = HuggingFaceEmbedding(model_name=embedding_model)
+print(f"Loading embedding model: {embedding_model}", flush=True)
+Settings.embed_model = HuggingFaceEmbedding(
+    model_name=embedding_model,
+    device="cpu",
+)
+print("Embedding model ready.", flush=True)
 
 documents_manifest = load_corpus_manifest(manifest_path)
 corpus_files = build_corpus_files(documents_manifest, corpus_dir)
@@ -56,9 +62,12 @@ if (
     index_version_path.exists()
     and index_version_path.read_text(encoding="utf-8").strip() == index_version
 ):
+    print("Loading cached vector index...", flush=True)
     storage_context = StorageContext.from_defaults(persist_dir=str(storage_dir))
     index = load_index_from_storage(storage_context)
+    print("Vector index ready.", flush=True)
 else:
+    print("Building vector index...", flush=True)
     documents = SimpleDirectoryReader(
         input_files=corpus_files,
         file_metadata=file_metadata,
@@ -66,6 +75,7 @@ else:
     index = VectorStoreIndex.from_documents(documents)
     index.storage_context.persist(persist_dir=str(storage_dir))
     index_version_path.write_text(index_version, encoding="utf-8")
+    print("Vector index built and cached.", flush=True)
 
 query_engine = index.as_query_engine()
 
@@ -87,13 +97,29 @@ agent = FunctionAgent(
 )
 
 
+async def report_progress(message: str, interval: float = 5.0) -> None:
+    elapsed = 0.0
+    while True:
+        await asyncio.sleep(interval)
+        elapsed += interval
+        print(f"{message} ({elapsed:.0f}s elapsed)", flush=True)
+
+
 async def main() -> None:
-    response = await agent.run(
-        user_msg=(
-            "How do I create, configure, and run an E3SM case with CIME, and "
-            "where does SimBoard fit into that workflow?"
+    print("Sending question to LivAI...", flush=True)
+    progress_task = asyncio.create_task(report_progress("Waiting for LivAI"))
+    try:
+        response = await agent.run(
+            user_msg=(
+                "How do I create, configure, and run an E3SM case with CIME, and "
+                "where does SimBoard fit into that workflow?"
+            )
         )
-    )
+    finally:
+        progress_task.cancel()
+        with suppress(asyncio.CancelledError):
+            await progress_task
+    print("Response received.", flush=True)
     print(response)
 
 
