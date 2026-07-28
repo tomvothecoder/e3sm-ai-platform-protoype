@@ -15,12 +15,12 @@ REQUIRED_FIELDS = {
 COMMIT_SHA_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 
 
-def load_corpus_manifest(manifest_path: Path) -> list[dict[str, str]]:
+def load_knowledge_source_manifest(manifest_path: Path) -> list[dict[str, str]]:
     manifest: Any = json.loads(manifest_path.read_text(encoding="utf-8"))
     if not isinstance(manifest, dict) or not isinstance(
         manifest.get("documents"), list
     ):
-        raise TypeError("Corpus manifest must contain a documents list")
+        raise TypeError("Knowledge-source manifest must contain a documents list")
 
     documents: list[dict[str, str]] = []
     local_paths: set[str] = set()
@@ -56,15 +56,17 @@ def load_corpus_manifest(manifest_path: Path) -> list[dict[str, str]]:
         documents.append(document)
 
     if not documents:
-        raise ValueError("Corpus manifest must contain at least one document")
+        raise ValueError(
+            "Knowledge-source manifest must contain at least one document"
+        )
     return documents
 
 
 def build_metadata_by_file(
-    documents: list[dict[str, str]], corpus_dir: Path
+    documents: list[dict[str, str]], knowledge_sources_dir: Path
 ) -> dict[Path, dict[str, str]]:
     return {
-        (corpus_dir / document["local_path"]).resolve(): {
+        (knowledge_sources_dir / document["local_path"]).resolve(): {
             field: document[field]
             for field in (
                 "repository",
@@ -78,18 +80,23 @@ def build_metadata_by_file(
     }
 
 
-def build_corpus_files(documents: list[dict[str, str]], corpus_dir: Path) -> list[Path]:
-    return [(corpus_dir / document["local_path"]).resolve() for document in documents]
+def build_knowledge_source_files(
+    documents: list[dict[str, str]], knowledge_sources_dir: Path
+) -> list[Path]:
+    return [
+        (knowledge_sources_dir / document["local_path"]).resolve()
+        for document in documents
+    ]
 
 
 def compute_index_version(
-    manifest_path: Path, embedding_model: str, corpus_files: list[Path]
+    manifest_path: Path, embedding_model: str, knowledge_source_files: list[Path]
 ) -> str:
     digest = hashlib.sha256()
     digest.update(manifest_path.read_bytes())
     digest.update(b"\0")
     digest.update(embedding_model.encode())
-    for corpus_file in corpus_files:
+    for knowledge_source_file in knowledge_source_files:
         digest.update(b"\0")
-        digest.update(corpus_file.read_bytes())
+        digest.update(knowledge_source_file.read_bytes())
     return digest.hexdigest()

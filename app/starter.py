@@ -15,18 +15,18 @@ from llama_index.core.agent.workflow import FunctionAgent
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.openai_like import OpenAILike
 
-from app.corpus import (
-    build_corpus_files,
+from app.knowledge_sources import (
+    build_knowledge_source_files,
     build_metadata_by_file,
     compute_index_version,
-    load_corpus_manifest,
+    load_knowledge_source_manifest,
 )
 
 load_dotenv()
 
 project_root = Path(__file__).resolve().parents[1]
-manifest_path = project_root / "data" / "e3sm-corpus.json"
-corpus_dir = project_root / "data" / "e3sm"
+manifest_path = project_root / "data" / "e3sm-knowledge-sources.json"
+knowledge_sources_dir = project_root / "data" / "e3sm"
 storage_dir = project_root / "storage" / "e3sm"
 index_version_path = storage_dir / "index-version"
 embedding_model = "BAAI/bge-small-en-v1.5"
@@ -47,10 +47,16 @@ Settings.embed_model = HuggingFaceEmbedding(
 )
 print("Embedding model ready.", flush=True)
 
-documents_manifest = load_corpus_manifest(manifest_path)
-corpus_files = build_corpus_files(documents_manifest, corpus_dir)
-metadata_by_file = build_metadata_by_file(documents_manifest, corpus_dir)
-index_version = compute_index_version(manifest_path, embedding_model, corpus_files)
+documents_manifest = load_knowledge_source_manifest(manifest_path)
+knowledge_source_files = build_knowledge_source_files(
+    documents_manifest, knowledge_sources_dir
+)
+metadata_by_file = build_metadata_by_file(
+    documents_manifest, knowledge_sources_dir
+)
+index_version = compute_index_version(
+    manifest_path, embedding_model, knowledge_source_files
+)
 
 
 def file_metadata(file_path: str) -> dict[str, str]:
@@ -69,7 +75,7 @@ if (
 else:
     print("Building vector index...", flush=True)
     documents = SimpleDirectoryReader(
-        input_files=corpus_files,
+        input_files=knowledge_source_files,
         file_metadata=file_metadata,
     ).load_data()
     index = VectorStoreIndex.from_documents(documents)
@@ -92,7 +98,7 @@ agent = FunctionAgent(
     system_prompt=(
         "You are an E3SM assistant. Use the document search tool for questions "
         "about E3SM, CIME case workflows, and SimBoard. Base answers on the "
-        "indexed corpus and identify source documents when possible."
+        "indexed knowledge base and identify source documents when possible."
     ),
 )
 

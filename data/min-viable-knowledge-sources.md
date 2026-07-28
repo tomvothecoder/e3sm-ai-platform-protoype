@@ -1,4 +1,4 @@
-## Minimum viable corpus
+## Minimum viable knowledge sources
 
 Use the raw source files rather than rendered HTML to avoid navigation and template noise.
 

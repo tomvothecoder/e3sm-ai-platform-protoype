@@ -2,14 +2,14 @@ VENV := .venv
 PYTHON := $(VENV)/bin/python
 RUFF := $(VENV)/bin/ruff
 
-.PHONY: help venv install activate corpus-sync test run lint format
+.PHONY: help venv install activate knowledge-sources-sync test run lint format
 
 help:
 	@printf '%s\n' \
 		'make venv      Create the uv virtual environment' \
 		'make install   Install requirements into the environment' \
 		'make activate  Open an interactive shell in the environment' \
-		'make corpus-sync  Download the pinned E3SM corpus' \
+		'make knowledge-sources-sync  Download pinned knowledge sources' \
 		'make test      Run unit tests' \
 		'make run       Run the LlamaIndex starter' \
 		'make lint      Check Python code with Ruff' \
@@ -27,8 +27,8 @@ activate: venv
 	@printf '%s\n' 'Opening activated shell; exit it to return.'
 	@. $(VENV)/bin/activate && exec "$${SHELL:-/bin/sh}" -i
 
-corpus-sync:
-	$(PYTHON) -m scripts.sync_corpus
+knowledge-sources-sync:
+	$(PYTHON) -m scripts.sync_knowledge_sources
 
 test:
 	$(PYTHON) -m unittest discover -s tests
