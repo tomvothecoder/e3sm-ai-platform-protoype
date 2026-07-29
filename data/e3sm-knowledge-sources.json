@@ -1,0 +1,76 @@
+{
+  "documents": [
+    {
+      "repository": "E3SM-Project/E3SM",
+      "path": "docs/user-guide/index.md",
+      "commit_sha": "64cf8c78cbe2b22a2974bbfec78a37cb9c918f86",
+      "document_type": "markdown",
+      "source_url": "https://raw.githubusercontent.com/E3SM-Project/E3SM/64cf8c78cbe2b22a2974bbfec78a37cb9c918f86/docs/user-guide/index.md",
+      "local_path": "E3SM/docs/user-guide/index.md"
+    },
+    {
+      "repository": "E3SM-Project/E3SM-Project.github.io",
+      "path": "docs/running-e3sm-guide/guide-prior-to-production.md",
+      "commit_sha": "5589cd0768b1cddbd5d092b69a8208467d9c6e00",
+      "document_type": "markdown",
+      "source_url": "https://raw.githubusercontent.com/E3SM-Project/E3SM-Project.github.io/5589cd0768b1cddbd5d092b69a8208467d9c6e00/docs/running-e3sm-guide/guide-prior-to-production.md",
+      "local_path": "E3SM-Project.github.io/docs/running-e3sm-guide/guide-prior-to-production.md"
+    },
+    {
+      "repository": "E3SM-Project/E3SM-Project.github.io",
+      "path": "docs/running-e3sm-guide/guide-production.md",
+      "commit_sha": "5589cd0768b1cddbd5d092b69a8208467d9c6e00",
+      "document_type": "markdown",
+      "source_url": "https://raw.githubusercontent.com/E3SM-Project/E3SM-Project.github.io/5589cd0768b1cddbd5d092b69a8208467d9c6e00/docs/running-e3sm-guide/guide-production.md",
+      "local_path": "E3SM-Project.github.io/docs/running-e3sm-guide/guide-production.md"
+    },
+    {
+      "repository": "ESMCI/cime",
+      "path": "doc/source/ccs/query-configuration.rst",
+      "commit_sha": "c4e0c416ab85405bf7909576020d0e77230bc4d9",
+      "document_type": "restructuredtext",
+      "source_url": "https://raw.githubusercontent.com/ESMCI/cime/c4e0c416ab85405bf7909576020d0e77230bc4d9/doc/source/ccs/query-configuration.rst",
+      "local_path": "cime/doc/source/ccs/query-configuration.rst"
+    },
+    {
+      "repository": "ESMCI/cime",
+      "path": "doc/source/ccs/creating-a-case.rst",
+      "commit_sha": "c4e0c416ab85405bf7909576020d0e77230bc4d9",
+      "document_type": "restructuredtext",
+      "source_url": "https://raw.githubusercontent.com/ESMCI/cime/c4e0c416ab85405bf7909576020d0e77230bc4d9/doc/source/ccs/creating-a-case.rst",
+      "local_path": "cime/doc/source/ccs/creating-a-case.rst"
+    },
+    {
+      "repository": "ESMCI/cime",
+      "path": "doc/source/ccs/running-a-case.rst",
+      "commit_sha": "c4e0c416ab85405bf7909576020d0e77230bc4d9",
+      "document_type": "restructuredtext",
+      "source_url": "https://raw.githubusercontent.com/ESMCI/cime/c4e0c416ab85405bf7909576020d0e77230bc4d9/doc/source/ccs/running-a-case.rst",
+      "local_path": "cime/doc/source/ccs/running-a-case.rst"
+    },
+    {
+      "repository": "ESMCI/cime",
+      "path": "doc/source/ccs/troubleshooting.rst",
+      "commit_sha": "c4e0c416ab85405bf7909576020d0e77230bc4d9",
+      "document_type": "restructuredtext",
+      "source_url": "https://raw.githubusercontent.com/ESMCI/cime/c4e0c416ab85405bf7909576020d0e77230bc4d9/doc/source/ccs/troubleshooting.rst",
+      "local_path": "cime/doc/source/ccs/troubleshooting.rst"
+    },
+    {
+      "repository": "E3SM-Project/simboard",
+      "path": "README.md",
+      "commit_sha": "fb112a8a294c8f24d43019023f7a01fb1442ccfe",
+      "document_type": "markdown",
+      "source_url": "https://raw.githubusercontent.com/E3SM-Project/simboard/fb112a8a294c8f24d43019023f7a01fb1442ccfe/README.md",
+      "local_path": "simboard/README.md"
+    },
+    {
+      "repository": "E3SM-Project/simboard",
+      "path": "docs/developer/README.md",
+      "commit_sha": "fb112a8a294c8f24d43019023f7a01fb1442ccfe",
+      "document_type": "markdown",
+      "source_url": "https://raw.githubusercontent.com/E3SM-Project/simboard/fb112a8a294c8f24d43019023f7a01fb1442ccfe/docs/developer/README.md",
+      "local_path": "simboard/docs/developer/README.md"
+    }
+  ]
+}
